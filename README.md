@@ -10,7 +10,9 @@ There are two classes which can zoom in or zoom out images and cut the image.
 2017.11.11:
 
 Improved selectrect class & ImageWidget class, removed useless parameters.
+
 Improved interaction logic.
 
 优化了selectrect类和ImageWidget类，去除不必要参数。在ImageWidget对象中单击另存为时会自己创建selectrect子对象，不用在外部用信号槽手动链接两个类。
+
 优化交互逻辑。
