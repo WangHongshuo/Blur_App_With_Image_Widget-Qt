@@ -16,7 +16,6 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/opencv.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/highgui/highgui.hpp>
 #include "ImageWidget.h"
 #include "selectrect.h"
 
@@ -81,10 +80,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->spinBox_th2,SIGNAL(editingFinished()),this,SLOT(blur_img_process()));
     connect(ui->spinBox_size,SIGNAL(editingFinished()),this,SLOT(blur_img_process()));
 
-//    ui->m->hide();
-//    ui->m->setAttribute(Qt::WA_DeleteOnClose);
-    connect(ui->show_img,SIGNAL(is_select_press()),this,SLOT(rec_is_select_press()));
-
 }
 
 MainWindow::~MainWindow()
@@ -94,17 +89,17 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_open_file_clicked()
 {
-//    QString filedir = QFileDialog::getOpenFileName(this, tr("Open File"),
-//        "C:/Users/Aaron/Pictures/standord test/",
-//        tr("Images (*.png *.xpm *.jpg *.tiff *.bmp)"));
-//    ori_img = new QImage;
-//    ori_img->load(filedir);
-    QString filename = QFileDialog::getOpenFileName(this,tr("Open Image"),"",tr("Image File(*.bmp *.jpg *.jpeg *.png)"));
-    QTextCodec *code = QTextCodec::codecForName("gb18030");
-    std::string name = code->fromUnicode(filename).data();
-    input_file = cv::imread(name);
-//    if (filedir.isNull()||filedir == "")
-    if(!input_file.data)
+    QString filedir = QFileDialog::getOpenFileName(this, tr("Open File"),
+        "C:/",
+        tr("Images (*.png *.xpm *.jpg *.tiff *.bmp)"));
+    ori_img = new QImage;
+    ori_img->load(filedir);
+//    QString filename = QFileDialog::getOpenFileName(this,tr("Open Image"),"",tr("Image File(*.bmp *.jpg *.jpeg *.png)"));
+//    QTextCodec *code = QTextCodec::codecForName("gb18030");
+//    std::string name = code->fromUnicode(filename).data();
+//    input_file = cv::imread(name);
+    if (filedir.isNull()||filedir == "")
+//    if(!input_file.data)
     {
         img_data = false;
         QMessageBox msgBox(QMessageBox::Critical,tr("错误"),tr("未载入图像！"));
@@ -114,7 +109,7 @@ void MainWindow::on_open_file_clicked()
     {
 
         img_data = true;
-
+        input_file = QImage2Mat(*ori_img);
         blur_img_process();
     }
 }
@@ -252,14 +247,4 @@ void MainWindow::blur_img_process()
         cv::GaussianBlur(input_file,blur_img,cv::Size(size,size),sigmaX,sigmaY);
         show_open_img(blur_img);
     }
-}
-
-
-void MainWindow::rec_is_select_press()
-{
-    SelectRect* m = new SelectRect(ui->show_img);
-////    qDebug() << ui->show_img->geometry();
-    m->setGeometry(0,0,ui->show_img->geometry().width(),ui->show_img->geometry().height());
-    m->show();
-    connect(m,SIGNAL(send_data(QVariant)),ui->show_img,SLOT(receiver_rect(QVariant)));
 }

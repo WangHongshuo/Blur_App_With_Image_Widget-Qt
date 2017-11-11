@@ -4,17 +4,16 @@
 
 SelectRect::SelectRect(QWidget *parent) : QWidget(parent)
 {
-    //注册结构体
-    rect_info r;
-    QVariant DataVar;
-    DataVar.setValue(r);
-    qRegisterMetaType<QVariant>("QVariant");
+    image = new QImage;
+    is_image_load = false;
+    // 关闭后释放资源
     this->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 SelectRect::~SelectRect()
 {
-
+    if(is_image_load)
+        delete image;
 }
 
 
@@ -43,8 +42,8 @@ void SelectRect::mousePressEvent(QMouseEvent *event)
         {
         case Qt::LeftButton:
             mouse = Left;
-            rect.x = event->x();
-            rect.y = event->y();
+            first_mouse_pos_x = event->x();
+            first_mouse_pos_y = event->y();
 //            qDebug() << first_mousePosX << first_mousePosX;
             break;
         case Qt::RightButton:
@@ -60,9 +59,11 @@ void SelectRect::mousePressEvent(QMouseEvent *event)
 
 void SelectRect::mouseMoveEvent(QMouseEvent *event)
 {
-    if (mouse == Left)
+    if (mouse == Left )
     {
         // 限定在mask内
+        rect.x = first_mouse_pos_x;
+        rect.y = first_mouse_pos_y;
         int x = event->x();
         int y = event->y();
         if(x < 0)
@@ -88,7 +89,7 @@ void SelectRect::contextMenuEvent(QContextMenuEvent *event)
     subActionSave = subMenu->addAction(tr("另存为"));
     subActionExit = subMenu->addAction(tr("退出"));
     connect(subActionExit,SIGNAL(triggered()),this,SLOT(select_exit()));
-    connect(subActionSave,SIGNAL(triggered()),this,SLOT(send_rect_info()));
+    connect(subActionSave,SIGNAL(triggered()),this,SLOT(cut_img()));
     connect(subActionReset,SIGNAL(triggered()),this,SLOT(select_reset()));
     subMenu->exec(cur.pos());
     delete subMenu;
@@ -96,13 +97,8 @@ void SelectRect::contextMenuEvent(QContextMenuEvent *event)
 
 void SelectRect::select_exit()
 {
+    emit select_mode_exit();
     this->close();
-}
-void SelectRect::send_rect_info()
-{
-    QVariant send_rect_data;
-    send_rect_data.setValue(rect);
-    emit send_data(send_rect_data);
 }
 
 void SelectRect::select_reset()
@@ -110,4 +106,86 @@ void SelectRect::select_reset()
     rect.w = 0;
     rect.h = 0;
     update();
+}
+
+void SelectRect::cut_img()
+{
+    // 接受到截取框信息
+    if(is_image_load)
+    {
+        rect_info data;
+        data = rect;
+        // 修正矩形坐标
+        if(data.w < 0)
+        {
+            data.x += data.w;
+            data.w = -data.w;
+        }
+        if(data.h < 0)
+        {
+            data.y += data.h;
+            data.h = -data.h;
+        }
+//        qDebug() << data.x << data.y << data.w << data.h;
+        if(data.w == 0 && data.h == 0)
+        {
+            QMessageBox msgBox(QMessageBox::Critical,tr("错误"),tr("未选取区域！"));
+            msgBox.exec();
+        }
+        else
+        {
+            QImage* temp = new QImage;
+            QImage* save_img = new QImage;
+            *temp = image->copy();
+            //        qDebug()<< temp << &mp_img;
+            //        qDebug() << temp->size();
+            //        qDebug() << this->width() * scalex << this->height() * scalex;
+            *temp = temp->scaled(this->width() * scalex,this->height() * scalex,Qt::KeepAspectRatio);
+            //        qDebug() << temp->size();
+            // 计算相对于图像内的坐标
+            int x,y,w,h;
+            x = data.x - xtranslate;
+            y = data.y - ytranslate;
+            w = data.w;
+            h = data.h;
+            // 限定截取范围在图像内
+            // 修正顶点
+            if(x < 0)
+            {
+                w = data.w + x;
+                x = 0;
+            }
+            if (y < 0)
+            {
+                h = data.h + y;
+                y = 0;
+            }
+            if(x + data.w > temp->width())
+                w = temp->width() - x;
+            if(y + data.h > temp->height())
+                h = temp->height() - y;
+//            qDebug() << xtranslate << ytranslate << temp->width() << temp->height();
+//            qDebug() << x << y << w << h;
+            if(w > 0 && h > 0)
+            {
+                *save_img = temp->copy(x,y,w,h);
+                QString filename = QFileDialog::getSaveFileName(this, tr("Open File"),
+                                                                "C:/",
+                                                                tr("Images (*.png *.xpm *.jpg *.tiff *.bmp)"));
+                save_img->save(filename);
+            }
+            else
+            {
+                QMessageBox msgBox(QMessageBox::Critical,tr("错误"),tr("未选中图像！"));
+                msgBox.exec();
+            }
+            delete temp;
+            delete save_img;
+        }
+    }
+    else
+    {
+        QMessageBox msgBox(QMessageBox::Critical,tr("错误"),tr("未选中图像！"));
+        msgBox.exec();
+    }
 }

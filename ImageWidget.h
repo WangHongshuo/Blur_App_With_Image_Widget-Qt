@@ -7,11 +7,11 @@
 #include <QCursor>
 #include <QFileDialog>
 #include <QSplitter>
-#include <QVariant>
 #include <QMessageBox>
 #include "selectrect.h"
 
 enum MouseDown{Left,Mid,Right,No};
+
 class ImageWidget :
 	public QWidget
 {
@@ -23,31 +23,32 @@ public:
     void setImage(QImage* img)
 	{
         mp_img = img;
-		isImageLoad = true;
+        is_image_load = true;
+        scalex = scaley = 1.0;
+        xtranslate = ytranslate = 0;
+        last_x_pos = last_y_pos = 0;
+        mouse = No;
 		update();
 	}
 
 	void clear()
 	{
-		if(isImageLoad)
+        if(is_image_load)
 		{
-			isImageLoad = false;
+            is_image_load = false;
 			//delete mp_img;
             mp_img = NULL;
             update();
 		}
-
 	}
 	
-	void iniActions();
-	
+	void iniActions();	
 	void wheelEvent(QWheelEvent *e);
 	void mouseMoveEvent(QMouseEvent * e);
 	void mousePressEvent(QMouseEvent * e);
     void mouseReleaseEvent(QMouseEvent *e);
     void paintEvent(QPaintEvent *e);
     void contextMenuEvent(QContextMenuEvent *e);
-//	void mouseDoubleClickEvent(QMouseEvent *e);
 
 
 public slots:
@@ -57,20 +58,17 @@ public slots:
 	void translate(int x,int y);
 	void save();
     void select();
-	void con_dia();
-    void receiver_rect(QVariant rect_data);
 signals:
-	void sig_condional_dia(int x,int y);   
-    void is_select_press();
+
 
 private slots:
-
+    void is_select_mode_exit();
 
 private:
-    QImage *mp_img = new QImage;
 
-	float scalex;
-	float scaley;
+    QImage *mp_img = new QImage;
+    double scalex;
+    double scaley;
 	int xtranslate;
 	int ytranslate;
     int last_x_pos = 0;
@@ -78,7 +76,8 @@ private:
 
 	int mousePosX;
 	int mousePosY;
-	bool isImageLoad;
+    bool is_image_load;
+    bool is_select_mode;
 
 	MouseDown mouse;
 	
@@ -88,9 +87,5 @@ private:
 
 	QAction* conditionDialation;
 	QMenu* mMenu;
-	bool maxmum;
 
-	//QPoint mospos;
-public:
-	int widgetid;
 };

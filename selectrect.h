@@ -9,8 +9,6 @@
 #include <QCursor>
 #include <QFileDialog>
 #include <QSplitter>
-#include <QMetaType>
-#include <QVariant>
 #include "ImageWidget.h"
 
 
@@ -27,30 +25,47 @@ class SelectRect : public QWidget
 {
     Q_OBJECT
 public:
+
     SelectRect(QWidget *parent);
     ~SelectRect();
-
+    void set_image(QImage* img)
+    {
+        *image = img->copy();
+        is_image_load = true;
+    }
 
     void paintEvent(QPaintEvent *event);
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void contextMenuEvent(QContextMenuEvent *event);
+    double scalex;
+    double scaley;
+    int xtranslate;
+    int ytranslate;
+
+protected:
 
 
 signals:
-    void send_data(QVariant send_rect_data);
+    void select_mode_exit();
 public slots:
     void select_exit();
-    void send_rect_info();
     void select_reset();
+    void cut_img();
+
 private:
+
+
     QMenu* subMenu;
     QAction* subActionReset;
     QAction* subActionSave;
     QAction* subActionExit;
     rect_info rect;
-
+    int first_mouse_pos_x;
+    int first_mouse_pos_y;
     int mouse;
+    QImage* image;
+    bool is_image_load;
 
 };
 
