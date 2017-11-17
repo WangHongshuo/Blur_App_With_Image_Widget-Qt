@@ -16,3 +16,9 @@ Improved interaction logic.
 优化了selectrect类和ImageWidget类，去除不必要参数。在ImageWidget对象中单击另存为时会自己创建selectrect子对象，不用在外部用信号槽手动链接两个类。
 
 优化交互逻辑。
+
+2017.11.17
+
+fixed zoom in & zoom out limitation, this function needs huge computer memories when the scale is big, so the max scale is fixed to 12.
+
+修正放大缩小限制，此功能当放大倍数过大时会占用很大内存，故将最大放大倍数限制为12
