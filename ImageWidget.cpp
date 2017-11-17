@@ -121,7 +121,7 @@ void ImageWidget::resetPos()
 
 void ImageWidget::zoomout()
 {
-    if(scalex<=100&&scaley<=100)
+    if(scalex<=12&&scaley<=12)
     {
         scalex *= 1.1;
         scaley *= 1.1;
@@ -131,7 +131,7 @@ void ImageWidget::zoomout()
 
 void ImageWidget::zoomin()
 {
-    if(scalex>=0.01&&scaley>=0.01)
+    if(scalex>=0.05&&scaley>=0.05)
     {
         scalex *= 1.0/1.1;
         scaley *= 1.0/1.1;
