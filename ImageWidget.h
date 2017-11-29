@@ -66,7 +66,7 @@ private slots:
 
 private:
 
-    QImage *mp_img = new QImage;
+    QImage *mp_img;
     double scalex;
     double scaley;
 	int xtranslate;
