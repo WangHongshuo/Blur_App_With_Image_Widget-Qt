@@ -22,3 +22,9 @@ Improved interaction logic.
 fixed zoom in & zoom out limitation, this function needs huge computer memories when the scale is big, so the max scale is fixed to 12.
 
 修正放大缩小限制，此功能当放大倍数过大时会占用很大内存，故将最大放大倍数限制为12
+
+2017.11.29
+
+fixed a pointer bug
+
+修复了当建立ImageWidget子对象时，父对象销毁后mp_img指针被多次delete的问题
