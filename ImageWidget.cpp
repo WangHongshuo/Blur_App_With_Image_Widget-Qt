@@ -13,7 +13,7 @@ ImageWidget::ImageWidget(QWidget *parent):QWidget(parent),is_image_load(false),s
 ImageWidget::~ImageWidget(void)
 {
     if(is_image_load)
-        delete mp_img;
+        mp_img = NULL;
 }
 
 
