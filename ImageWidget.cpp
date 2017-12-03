@@ -3,7 +3,7 @@
 #include <QDebug>
 #include "selectrect.h"
 
-ImageWidget::ImageWidget(QWidget *parent):QWidget(parent),is_image_load(false),scalex(1),scaley(1),xtranslate(0),ytranslate(0),mouse(No)
+ImageWidget::ImageWidget(QWidget *parent):QWidget(parent),scalex(1),scaley(1),xtranslate(0),ytranslate(0),mouse(No)
 {
     is_image_load = false;
     is_select_mode = false;
@@ -97,8 +97,7 @@ void ImageWidget::paintEvent(QPaintEvent *e)
     if(!is_image_load)
         return;
     painter.drawImage(QPoint(xtranslate,ytranslate),mp_img->scaled(this->width()*scalex,this->height()*scaley,Qt::KeepAspectRatio));
-//    qDebug() << mp_img->width() << mp_img->height();
-
+//    qDebug() << scalex;
 }
 
 void ImageWidget::contextMenuEvent(QContextMenuEvent *e)
