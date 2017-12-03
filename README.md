@@ -28,3 +28,9 @@ fixed zoom in & zoom out limitation, this function needs huge computer memories 
 fixed a pointer bug
 
 修复了当建立ImageWidget子对象时，父对象销毁后mp_img指针被多次delete的问题
+
+2017.12.03
+
+updated ImageWidget
+
+更新了ImageWidget控件
