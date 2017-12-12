@@ -9,13 +9,13 @@ There are two classes which can zoom in or zoom out images and cut the image.
 
 2017.11.11:
 
-Improved selectrect class & ImageWidget class, removed useless parameters.
+improved selectrect class & ImageWidget class, removed useless parameters.
 
 Improved interaction logic.
 
-优化了selectrect类和ImageWidget类，去除不必要参数。在ImageWidget对象中单击另存为时会自己创建selectrect子对象，不用在外部用信号槽手动链接两个类。
+改进了selectrect类和ImageWidget类，去除不必要参数。在ImageWidget对象中单击另存为时会自己创建selectrect子对象，不用在外部用信号槽手动链接两个类。
 
-优化交互逻辑。
+改进交互逻辑。
 
 2017.11.17
 
@@ -34,3 +34,9 @@ fixed a pointer bug
 updated ImageWidget
 
 更新了ImageWidget控件
+
+2017.12.12
+
+updated ImageWidget, recoded load image function, you can set image by the pointer(not copy the memory) or the data(copy the memory), and added other small options.
+
+更新了ImageWidget,重写了载入图像函数，可以用指针传入（不复制内存）和数据传入（复制内存），添加了载入图像时的一些额外选项。

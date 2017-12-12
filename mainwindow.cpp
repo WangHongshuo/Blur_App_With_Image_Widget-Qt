@@ -37,7 +37,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->slider_size->setMinimum(1);
     ui->slider_size->setMaximum(799);
-    ui->slider_size->setValue(9);
+    ui->slider_size->setValue(1);
     ui->slider_size->setSingleStep(2);
 
     ui->spinBox_th1->setMinimum(1);
@@ -52,7 +52,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->spinBox_size->setMinimum(1);
     ui->spinBox_size->setMaximum(799);
-    ui->spinBox_size->setValue(9);
+    ui->spinBox_size->setValue(1);
     ui->spinBox_size->setSingleStep(2);
 
     size = ui->slider_size->value();
@@ -84,6 +84,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    delete ori_img;
+    delete send_img;
     delete ui;
 }
 
@@ -92,7 +94,6 @@ void MainWindow::on_open_file_clicked()
     QString filedir = QFileDialog::getOpenFileName(this, tr("Open File"),
         "C:/",
         tr("Images (*.png *.xpm *.jpg *.tiff *.bmp)"));
-    ori_img = new QImage;
     ori_img->load(filedir);
 //    QString filename = QFileDialog::getOpenFileName(this,tr("Open Image"),"",tr("Image File(*.bmp *.jpg *.jpeg *.png)"));
 //    QTextCodec *code = QTextCodec::codecForName("gb18030");
@@ -179,35 +180,6 @@ cv::Mat MainWindow::QImage2Mat(QImage image)
     return mat;
 }
 
-void MainWindow::auto_size(cv::Mat &src)
-{
-    int w;
-    int h;
-    if(src.cols > 640)
-    {
-        h = round(double(src.rows)/double(src.cols)*double(640.0));
-        cv::resize(src,src,cv::Size(640,h),3);
-    }
-    if(src.rows > 480)
-    {
-        w = round(double(src.cols)/double(src.rows)*double(480.0));
-        cv::resize(src,src,cv::Size(w,480),3);
-    }
-    if(src.cols < 640 || src.rows < 480)
-    {
-        if(src.cols < src.rows)
-        {
-            w = round(double(src.cols)/double(src.rows)*double(480.0));
-            cv::resize(src,src,cv::Size(w,480),3);
-        }
-        else
-        {
-            h = round(double(src.rows)/double(src.cols)*double(640.0));
-            cv::resize(src,src,cv::Size(640,h),3);
-        }
-    }
-}
-
 void MainWindow::show_open_img(cv::Mat &input_img)
 {
     *send_img = Mat2QImage(input_img);
@@ -215,7 +187,7 @@ void MainWindow::show_open_img(cv::Mat &input_img)
 //    image = image.convertToFormat(QImage::Format_RGB32);
 //    qDebug() << image.format();
 //    int p_image = int(&image);
-    ui->show_img->setImage(send_img);
+    ui->show_img->set_image_with_pointer(send_img,false);
 }
 
 void MainWindow::get_blur_img_value()
@@ -223,16 +195,6 @@ void MainWindow::get_blur_img_value()
     size = ui->slider_size->value();
     sigmaX = ui->slider_th1->value();
     sigmaY = ui->slider_th2->value();
-//    if(sigmaX % 2 == 0)
-//    {
-//        sigmaX -= 1;
-//        ui->slider_th1->setValue(sigmaX);
-//    }
-//    if (sigmaY % 2 == 0)
-//     {
-//        sigmaY -= 1;
-//        ui->slider_th2->setValue(sigmaY);
-//    }
     if (size % 2 == 0)
     {
         size -= 1;

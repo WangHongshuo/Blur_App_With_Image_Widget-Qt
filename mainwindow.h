@@ -31,7 +31,6 @@ public:
 
 private slots:
     void on_open_file_clicked();
-    void auto_size(cv::Mat &src);
     void show_open_img(cv::Mat &input_img);
     void get_blur_img_value();
     void blur_img_process();
@@ -41,7 +40,7 @@ private:
     cv::Mat input_file;
     cv::Mat blur_img;
     QImage* send_img = new QImage;
-    QImage* ori_img;
+    QImage* ori_img = new QImage;
     bool is_select_press = false;
     int size;
     int sigmaX;
