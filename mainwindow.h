@@ -11,11 +11,11 @@
 #include <algorithm>
 #include <math.h>
 #include <assert.h>
-#include <opencv/cv.h>
-#include <opencv2/core/core.hpp>
-#include <opencv2/opencv.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/core.hpp>
+#include <opencv2/imgproc.hpp>
+#include <opencv2/imgcodecs.hpp>
 #include "ImageWidget.h"
+#include "mat_qimage_convert.h"
 
 namespace Ui {
 class MainWindow;
@@ -46,8 +46,6 @@ private:
     int sigmaX;
     int sigmaY;
     bool img_data = false;
-    QImage Mat2QImage(cv::Mat &mat);
-    cv::Mat QImage2Mat(QImage image);
 
 };
 

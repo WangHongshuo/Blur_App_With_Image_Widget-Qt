@@ -26,11 +26,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp\
         mainwindow.cpp \
     ImageWidget.cpp \
-    selectrect.cpp
+    selectrect.cpp \
+    mat_qimage_convert.cpp
 
 HEADERS  += mainwindow.h \
     ImageWidget.h \
-    selectrect.h
+    selectrect.h \
+    mat_qimage_convert.h
 
 FORMS    += mainwindow.ui
 
