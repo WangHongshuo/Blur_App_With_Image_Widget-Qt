@@ -1,6 +1,6 @@
-# BlurApp-Qt
+# Blur App
+- This project based on Qt and opencv.
 ## Introduction: ##
-Based on Opencv
 
 There are two classes which can zoom in or zoom out images and cut the image.
 
