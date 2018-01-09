@@ -125,10 +125,6 @@
      </layout>
     </item>
    </layout>
-   <zorder>show_img</zorder>
-   <zorder>open_file</zorder>
-   <zorder>groupBox</zorder>
-   <zorder>verticalSpacer</zorder>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
@@ -137,7 +133,7 @@
   <customwidget>
    <class>ImageWidget</class>
    <extends>QWidget</extends>
-   <header location="global">ImageWidget.h</header>
+   <header location="global">ImageWidget-Qt/imagewidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

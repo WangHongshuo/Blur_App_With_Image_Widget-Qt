@@ -8,6 +8,12 @@ There are two classes which can zoom in or zoom out images and cut the image.
 
 ## Change Log: ##
 
+- 2018.01.09:     
+ 
+Set `ImageWidget` and `mat_qimage_convert` to submodule.     
+
+将 `ImageWidget` 和 `mat_qimage_convert` 设置为子模块。
+
 - 2017.12.12:
 
 updated ImageWidget, recoded load image function, you can set image by the pointer(not copy the memory) or the data(copy the memory), and added other small options.
@@ -15,7 +21,6 @@ updated ImageWidget, recoded load image function, you can set image by the point
 更新了ImageWidget,重写了载入图像函数，可以用指针传入（不复制内存）和数据传入（复制内存），添加了载入图像时的一些额外选项。
 
 - 2017.12.03:
-
 
 updated ImageWidget
 

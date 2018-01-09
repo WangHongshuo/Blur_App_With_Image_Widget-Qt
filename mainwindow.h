@@ -14,8 +14,8 @@
 #include <opencv2/core.hpp>
 #include <opencv2/imgproc.hpp>
 #include <opencv2/imgcodecs.hpp>
-#include "ImageWidget.h"
-#include "mat_qimage_convert.h"
+#include "ImageWidget-Qt/ImageWidget.h"
+#include "QImageMatConvert/mat_qimage_convert.h"
 
 namespace Ui {
 class MainWindow;

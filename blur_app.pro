@@ -25,19 +25,19 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    ImageWidget.cpp \
-    selectrect.cpp \
-    mat_qimage_convert.cpp
+    QImageMatConvert/mat_qimage_convert.cpp \
+    ImageWidget-Qt/ImageWidget.cpp \
+    ImageWidget-Qt/selectrect.cpp
 
 HEADERS  += mainwindow.h \
-    ImageWidget.h \
-    selectrect.h \
-    mat_qimage_convert.h
+    QImageMatConvert/mat_qimage_convert.h \
+    ImageWidget-Qt/ImageWidget.h \
+    ImageWidget-Qt/selectrect.h
 
 FORMS    += mainwindow.ui
 
-INCLUDEPATH += D:/opencv3.3.1/opencv_use/include\
-               D:/opencv3.3.1/opencv_use/include/opencv\
-               D:/opencv3.3.1/opencv_use/include/opencv2
-LIBS += -L D:/opencv3.3.1/opencv_use/lib/libopencv_*.a
+INCLUDEPATH += D:/opencv3.4/opencv_use/include\
+               D:/opencv3.4/opencv_use/include/opencv\
+               D:/opencv3.4/opencv_use/include/opencv2
+LIBS += -L D:/opencv3.4/opencv_use/lib/libopencv_*.a
 

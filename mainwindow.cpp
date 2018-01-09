@@ -15,8 +15,7 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/opencv.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
-#include "ImageWidget.h"
-#include "selectrect.h"
+#include "ImageWidget-Qt/ImageWidget.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
