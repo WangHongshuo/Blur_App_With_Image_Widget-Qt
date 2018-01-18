@@ -120,7 +120,7 @@ void MainWindow::show_open_img(cv::Mat &input_img)
 //    image = image.convertToFormat(QImage::Format_RGB32);
 //    qDebug() << image.format();
 //    int p_image = int(&image);
-    ui->show_img->set_image_with_pointer(send_img,true);
+    ui->show_img->setImageWithPointer(send_img);
 }
 
 void MainWindow::get_blur_img_value()
